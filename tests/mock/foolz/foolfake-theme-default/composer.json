@@ -1,0 +1,22 @@
+{
+    "name": "foolz/foolfake-theme-default",
+    "type": "foolz-theme",
+    "description": "A fake theme for unit testing.",
+    "keywords": ["theme", "default", "fake", "mock"],
+    "homepage": "http://www.foolz.us",
+    "license": "Apache-2.0",
+    "authors": [{"name": "foolz", "email": "support@foolz.us"}],
+    "support": {
+        "email": "support@foolz.us",
+        "irc": "irc://irc.irchighway.net/fooldriver"
+    },
+    "require": {
+        "php": ">=5.3.0",
+		"foolz/plugin": "dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Foolz\\Foolfake\\Theme\\Default": "classes/"
+        }
+    }
+}
