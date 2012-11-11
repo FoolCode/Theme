@@ -2,7 +2,7 @@
 
 namespace Foolz\Theme;
 
-class Asset
+class AssetManager
 {
 
 }

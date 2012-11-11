@@ -12,11 +12,11 @@
     },
     "require": {
         "php": ">=5.3.0",
-		"foolz/plugin": "dev"
+		"foolz/plugin": "dev-master"
     },
-    "suggest": {
-        "fuel/core": "Integrates perfectly as a FuelPHP 1.x package"
-    },
+	"require-dev": {
+		"foolz/cache": "dev-master"
+	},
     "autoload": {
         "psr-0": {
             "Foolz\\Theme": "classes/"
