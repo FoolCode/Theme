@@ -2,7 +2,7 @@
 
 namespace Foolz\Theme;
 
-class Util extends \Foolz\Plugin\Util
+class Util
 {
 	/**
 	 * Reformats a lowercase string to a class name by splitting on underscores and capitalizing

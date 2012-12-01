@@ -1,5 +1,5 @@
 {
-    "name": "foolz/foolfake-theme-default",
+    "name": "foolz/foolfake-theme-fake",
     "type": "foolz-theme",
     "description": "A fake theme for unit testing.",
     "keywords": ["theme", "default", "fake", "mock"],
@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Foolz\\Foolfake\\Theme\\Default": "classes/"
+            "Foolz\\Foolfake\\Theme\\Fake": "classes/"
         }
     }
 }

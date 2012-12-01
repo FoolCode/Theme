@@ -2,9 +2,20 @@
 
 namespace Foolz\Theme;
 
-class Theme extends \Foolz\Plugin\Plugin
+class Theme extends \Foolz\Package\Package
 {
-	public $extended = null;
+	protected static $autoloaded = [];
+
+	public function __construct($dir)
+	{
+		parent::__construct($dir);
+		if ( ! in_array(__CLASS__, static::$autoloaded))
+		{
+			$this->enableAutoloader();
+			static::$autoloaded[] = __CLASS__;
+		}
+
+	}
 
 	/**
 	 * Returns a new Builder object

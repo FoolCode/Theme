@@ -39,22 +39,106 @@ class View
 	 * @param  string                $type     The type of view, it can be partial or layout
 	 * @param  string                $view     The name of the view
 	 */
-	public function __construct(\Foolz\Theme\Builder $builder, $type, $view)
+	public static function forge(\Foolz\Theme\Builder $builder, $type, $view)
+	{
+		// get the View object in case it can be found
+		echo $class = $builder->getTheme()->getNamespace().'\\'.  ucfirst($type).'\\'.Util::lowercaseToClassName($view);
+		if (class_exists($class))
+		{
+			$new = new $class();
+		}
+		else
+		{
+			$new = new static();
+		}
+
+		$new->setBuilder($builder);
+		$new->setType($type);
+		$new->setView($view);
+		$new->setParamManager(new ParamManager());
+		return $new;
+	}
+
+	/**
+	 * Set the builder
+	 *
+	 * @param \Foolz\Theme\Builder $builder
+	 * @return \Foolz\Theme\View
+	 */
+	public function setBuilder(\Foolz\Theme\Builder $builder)
 	{
 		$this->builder = $builder;
-		$this->type = $type;
-		$this->view = $view;
-		$this->param_manager = new ParamManager();
+		return $this;
 	}
 
 	/**
 	 * Returns the Builder that created the View
 	 *
-	 * @return  \Foolz\Theme\Builder
+	 * @return  \Foolz\Theme\Builder  The Builder object
 	 */
 	public function getBuilder()
 	{
 		return $this->builder;
+	}
+
+	/**
+	 * Set the type of view
+	 *
+	 * @param  string  $type  The type of view
+	 *
+	 * @return  \Foolz\Theme\View  The current object
+	 */
+	public function setType($type)
+	{
+		$this->type = $type;
+		return $this;
+	}
+
+	/**
+	 * Returns the type of View
+	 *
+	 * @return  string  The type of view
+	 */
+	public function getType()
+	{
+		return $this->type;
+	}
+
+	/**
+	 * Sets the view
+	 * It won't change the view once the View object is created
+	 *
+	 * @param  string  $view  The name of the view
+	 *
+	 * @return  \Foolz\Theme\View  The current object
+	 */
+	public function setView($view)
+	{
+		$this->view = $view;
+		return $this;
+	}
+
+	/**
+	 * Returns the type of view
+	 *
+	 * @return  string  The type of view
+	 */
+	public function getView()
+	{
+		return $this->view;
+	}
+
+	/**
+	 * Sets the Parameter Manager
+	 *
+	 * @param  \Foolz\Theme\ParamManager  $param_manager  The parameter manager
+	 *
+	 * @return  \Foolz\Theme\View  The current object
+	 */
+	public function setParamManager(\Foolz\Theme\ParamManager $param_manager)
+	{
+		$this->param_manager = $param_manager;
+		return $this;
 	}
 
 	/**
@@ -68,9 +152,9 @@ class View
 	}
 
 	/**
-	 * Return the
+	 * Return the compiled view
 	 *
-	 * @return type
+	 * @return  string  The compiled view
 	 */
 	public function get()
 	{
@@ -82,6 +166,11 @@ class View
 		return $this->built;
 	}
 
+	/**
+	 * Compiles the view
+	 *
+	 * @return  \Foolz\Theme\View  The current object
+	 */
 	public function build()
 	{
 		$this->built = $this->doBuild();
@@ -90,28 +179,17 @@ class View
 	}
 
 
-	protected function doBuild($theme = null)
+	/**
+	 * If not extended, it will check if there's a classic view file and return the result
+	 *
+	 * @return  string  The compiled string
+	 * @throws  \OutOfBoundsException  If the view is not found also in the extended themes
+	 */
+	public function toString()
 	{
-		if ($theme === null)
-		{
-			$theme = $this->getBuilder()->getTheme();
-		}
-
-		// try building with a class
-		if ($this->getTheme()->getNamespace() !== false)
-		{
-			$class = $this->getTheme()->getNamespace().'\\'.ucfirst($this->type).'\\'.Util::lowercaseToClassName($this->view);
-
-			if (class_exists($class))
-			{
-				$view_class = new $class($this);
-
-				return $view_class->build();
-			}
-		}
-
 		// try building with an Event
-		$result = \Foolz\Plugin\Hook::forge('\Foolz\Theme\View::build.'.$class)
+		/*
+		$result = \Foolz\Plugin\Hook::forge('\Foolz\Theme\View::toString.build.'.$this->view)
 			->setObject($this)
 			->execute()
 			->get();
@@ -120,31 +198,31 @@ class View
 		{
 			return $result;
 		}
+		*/
 
-		// try building from the plain file
-		$file = $this->getTheme()->getDir().$this->type.DIRECTORY_SEPARATOR.$view.'.php';
-		if ( ! file_exists($file))
+		$theme = $this->getTheme();
+
+		while (true)
 		{
-			// isolation function
-			$function = function()
+			$file = $theme->getDir().$this->type.DIRECTORY_SEPARATOR.$this->view.'.php';
+			if (file_exists($file))
 			{
-				ob_start();
-				include $this->getTheme()->getDir().$this->type.DIRECTORY_SEPARATOR.$this->view.'.php';
-				return ob_get_clean();
-			};
+				// isolation function
+				$function = function()
+				{
+					ob_start();
+					include $this->getTheme()->getDir().$this->type.DIRECTORY_SEPARATOR.$this->view.'.php';
+					return ob_get_clean();
+				};
 
-			$function = $function->bindTo($this);
-			return $function();
+				$function = $function->bindTo($this);
+				return $function();
+			}
+
+			$theme = $theme->getExtended();
 		}
 
-		// we shouldn't be here unless we're extending a theme
-
-		// let's see if the extended theme does have the file we're looking for
-		if ($theme->getExtended() !== null)
-		{
-			return $this->doBuild($type, $view, $data);
-		}
-
+		// this should be thrown by $theme->getExtended, but we want to be explicit
 		throw new \OutOfBoundsException;
 	}
 }

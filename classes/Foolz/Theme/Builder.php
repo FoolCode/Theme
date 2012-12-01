@@ -72,7 +72,7 @@ class Builder
 	 */
 	public function createLayout($view)
 	{
-		return $this->layout = new View($this, $view);
+		return $this->layout = View::forge($this, 'layout', $view);
 	}
 
 	/**
@@ -85,7 +85,7 @@ class Builder
 	 */
 	public function createPartial($name, $view)
 	{
-		return $this->partials[$name] = new View($this, $view);
+		return $this->partials[$name] = View::forge($this, 'partial', $view);
 	}
 
 	/**
