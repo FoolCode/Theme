@@ -56,7 +56,7 @@ The builder is used to create the HTML. It divides the job between layouts and p
 
 	Sets the layout and returns the View object.
 
-*__$builder->createPartial($name, $view)__
+* __$builder->createPartial($name, $view)__
 
 	* string _$name_ - A given name for the partial
 	* string _$view_ - The name of the layout with underscores
@@ -89,7 +89,7 @@ Parameter managers are used to consistently store variables for being used in th
 
 	Returns an array of parameters.
 
-* __$pm->getParam($key)
+* __$pm->getParam($key)__
 
 	* string _$key_ - The key for the value
 
@@ -97,14 +97,14 @@ Parameter managers are used to consistently store variables for being used in th
 
 	__Throws:__ _\OutOfBoundsException_ - If the value was not set
 
-__$pm->setParam($key, $value)__
+* __$pm->setParam($key, $value)__
 
 	* string _$key_ - The key for the value
 	* mixed _$value_ - The value
 
 	Sets a parameter
 
-__$pm->setParams($array)__
+* __$pm->setParams($array)__
 
 	* array _$array_ - An array of parameters to set
 
