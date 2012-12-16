@@ -186,7 +186,7 @@ class View
 	 */
 	public function toString()
 	{
-		$theme = $this->getTheme();
+		$theme = $this->getBuilder()->getTheme();
 
 		while (true)
 		{
