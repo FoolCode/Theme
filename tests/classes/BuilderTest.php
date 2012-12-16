@@ -4,6 +4,11 @@ use Foolz\Theme\Loader as Loader;
 
 class BuilderTest extends PHPUnit_Framework_TestCase
 {
+	public function tearDown()
+	{
+		$this->theme()->refreshConfig();
+	}
+
 	/**
 	 *
 	 * @return  \Foolz\Theme\Loader
@@ -60,5 +65,12 @@ class BuilderTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertInstanceOf('Foolz\Theme\View', $this->bld()->createPartial('one_partial', 'this_partial'));
 		$this->assertInstanceOf('Foolz\Foolfake\Theme\Fake\Partial\ThisPartial', $this->bld()->createPartial('one_partial', 'this_partial'));
+	}
+
+	public function testBuild()
+	{
+		$bld = $this->bld();
+		$bld->createLayout('ThisLayout');
+		$this->assertSame('A fake layout.', $bld->get());
 	}
 }

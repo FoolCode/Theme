@@ -42,7 +42,7 @@ class View
 	public static function forge(\Foolz\Theme\Builder $builder, $type, $view)
 	{
 		// get the View object in case it can be found
-		echo $class = $builder->getTheme()->getNamespace().'\\'.  ucfirst($type).'\\'.Util::lowercaseToClassName($view);
+		$class = $builder->getTheme()->getNamespace().'\\'.  ucfirst($type).'\\'.Util::lowercaseToClassName($view);
 		if (class_exists($class))
 		{
 			$new = new $class();
@@ -173,11 +173,10 @@ class View
 	 */
 	public function build()
 	{
-		$this->built = $this->doBuild();
+		$this->built = $this->toString();
 
 		return $this;
 	}
-
 
 	/**
 	 * If not extended, it will check if there's a classic view file and return the result
@@ -187,19 +186,6 @@ class View
 	 */
 	public function toString()
 	{
-		// try building with an Event
-		/*
-		$result = \Foolz\Plugin\Hook::forge('\Foolz\Theme\View::toString.build.'.$this->view)
-			->setObject($this)
-			->execute()
-			->get();
-
-		if ( ! $result instanceof \Foolz\Plugin\Void)
-		{
-			return $result;
-		}
-		*/
-
 		$theme = $this->getTheme();
 
 		while (true)

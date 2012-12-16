@@ -128,8 +128,8 @@ class Builder
 	 * @return  string                 The content generated
 	 * @throws  \OutOfBoundsException  If the layout wasn't selected
 	 */
-	public function build()
+	public function get()
 	{
-		return $this->getLayout()->build();
+		return $this->getLayout()->get();
 	}
 }
