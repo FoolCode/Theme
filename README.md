@@ -26,6 +26,8 @@ Other features:
 * Asset Manager: compile LESS files on the fly.
 
 
+## Classes
+
 #### Theme
 
 The Theme object abstracts the content of the theme. These will be returned by the Loader, and you will be able to choose which to use.
@@ -112,3 +114,32 @@ Parameter managers are used to consistently store variables for being used in th
 
 #### View
 
+The View returned by the Builder is most often a custom object extending \Foolz\Theme\View.
+
+__It's compulsory to override the `toString()` method (not the `__toString()` magic method!) in order to output the HTML. This function should output HTML or return a string.__
+
+* __$view->toString()__
+
+	Called when the HTML must be generated. It should contain the classic HTML building logic. `$this` can be used. No manual output buffering is necessary.
+
+* __$view->getType()__
+
+	Returns the type of View. `layout` or `partial`.
+
+* __$view->getView()__
+
+	Returns the name of the View.
+
+* __$view->getParamManager()__
+
+	Returns the local parameter manager.
+
+* __$view->build()__
+
+	Builds _and cached_ the HTML. Returns the HTML.
+
+* __$view->doBuild()__
+
+	Builds the HTML and stores it in a variable. Rebuilds the HTML every time it's called.
+
+	__CHAINABLE__
