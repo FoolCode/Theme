@@ -18,7 +18,7 @@ class ParamManager
 	 */
 	public function reset()
 	{
-		$this->params = [];;
+		$this->params = [];
 		return $this;
 	}
 

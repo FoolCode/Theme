@@ -156,11 +156,11 @@ class View
 	 *
 	 * @return  string  The compiled view
 	 */
-	public function get()
+	public function build()
 	{
 		if ($this->built === null)
 		{
-			$this->build();
+			$this->doBuild();
 		}
 
 		return $this->built;
@@ -171,7 +171,7 @@ class View
 	 *
 	 * @return  \Foolz\Theme\View  The current object
 	 */
-	public function build()
+	public function doBuild()
 	{
 		$this->built = $this->toString();
 
