@@ -10,22 +10,36 @@ class ParamManagerTest extends PHPUnit_Framework_TestCase
 		$this->assertEmpty($pm->getParams());
 	}
 
-	public function testGetParamThrows()
+	/**
+	 * @expectedException \OutOfBoundsException
+	 */
+	public function testSetGetParamThrowsOutOfBounds()
 	{
-		$this->setExpectedException('OutOfBoundsException');
-		throw new OutOfBoundsException('OutOfBoundsException', 10);
+		$new = new ParamManager();
+		$new->getParam('derp');
 	}
 
 	public function testGetSetParam()
 	{
-		$this->assertSame(10, 10);
+		$stack = array();
+        $this->assertEquals(0, count($stack));
+ 
+        array_push($stack, 'foo');
+        $this->assertEquals('foo', $stack[count($stack)-1]);
+        $this->assertEquals(1, count($stack));
+ 
+        $this->assertEquals('foo', array_pop($stack));
+        $this->assertEquals(0, count($stack));
 	}
 
 	public function testGetSetParams()
 	{
-		$this->assertArrayHasKey('foo', array('foo' => 'bar'));
-	}
+		$arr = array('param1' => 'test', 'param2' => 'testtest');
+		$new = new ParamManager();
+		$new->setParams($arr);
 
+		$this->assertSame($arr, $new->getParams());
+	}
 }
 
 

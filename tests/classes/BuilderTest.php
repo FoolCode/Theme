@@ -71,6 +71,6 @@ class BuilderTest extends PHPUnit_Framework_TestCase
 	{
 		$bld = $this->bld();
 		$bld->createLayout('ThisLayout');
-		$this->assertSame('A fake layout.', $bld->get());
+		$this->assertSame('A fake layout.', $bld->build());
 	}
 }
