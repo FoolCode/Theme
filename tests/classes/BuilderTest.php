@@ -39,7 +39,6 @@ class BuilderTest extends PHPUnit_Framework_TestCase
 		return $this->theme()->createBuilder();
 	}
 
-
 	public function testConstruct()
 	{
 		$this->assertInstanceOf('Foolz\Theme\Builder', $this->bld());
@@ -67,6 +66,40 @@ class BuilderTest extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('Foolz\Foolfake\Theme\Fake\Partial\ThisPartial', $this->bld()->createPartial('one_partial', 'this_partial'));
 	}
 
+	public function testGetLayout()
+	{
+		$bld = $this->bld();
+		$bld->createLayout('this_layout');
+		$this->assertInstanceOf('Foolz\Theme\View', $bld->getLayout('this_layout'));
+		$this->assertInstanceOf('Foolz\Foolfake\Theme\Fake\Layout\ThisLayout', $bld->getLayout('this_layout'));
+	}
+
+	public function testGetPartial()
+	{
+		$bld = $this->bld();
+		$bld->createPartial('one_partial', 'this_partial');
+		$this->assertInstanceOf('Foolz\Theme\View', $bld->getPartial('one_partial', 'this_partial'));
+		$this->assertInstanceOf('Foolz\Foolfake\Theme\Fake\Partial\ThisPartial', $bld->getPartial('one_partial', 'this_partial'));
+	}
+
+	/**
+	 * @expectedException \BadMethodCallException
+	 * @expectedExceptionMessage The layout wasn't set.
+	 */
+	public function testGetLayoutThrowsBadMethodCall()
+	{
+		$this->bld()->getLayout();
+	}
+
+	/**
+	 * @expectedException \OutOfBoundsException
+	 * @expectedExceptionMessage No such partial exists.
+	 */
+	public function testGetPartialThrowsOutOfBounds()
+	{
+		$this->bld()->getPartial('derp');
+	}
+	
 	public function testBuild()
 	{
 		$bld = $this->bld();

@@ -36,8 +36,8 @@ class ParamManager
 	 * Returns the parameter with the key
 	 *
 	 * @param   string  $key
-	 *
 	 * @return  mixed  The value of the parameter
+	 *
 	 * @throws  \OutOfBoundsException If the key is not set
 	 */
 	public function getParam($key)
@@ -77,7 +77,7 @@ class ParamManager
 		{
 			$this->params[$key] = $item;
 		}
-
+		
 		return $this;
 	}
 }

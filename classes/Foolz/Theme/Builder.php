@@ -119,7 +119,7 @@ class Builder
 			return $this->partials[$name];
 		}
 
-		throw new \OutOfBoundsException('No such a partial exists.');
+		throw new \OutOfBoundsException('No such partial exists.');
 	}
 
 	/**
