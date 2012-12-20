@@ -11,8 +11,15 @@ class ThemeTest extends PHPUnit_Framework_TestCase
 	 */
 	public function load()
 	{
+		if ( ! file_exists(__DIR__.'/../public'))
+		{
+			mkdir(__DIR__.'/../public');
+		}
+
 		$loader = Loader::forge();
 		$loader->addDir('themes', __DIR__.'/../mock/');
+		$loader->setBaseUrl("");
+		$loader->setPublicDir(__DIR__."/../public");
 		return $loader;
 	}
 
@@ -37,8 +44,8 @@ class ThemeTest extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('Foolz\Theme\Builder', $this->theme()->createBuilder());
 	}
 
-	public function testCreateAssetManager()
+	public function testGetAssetManager()
 	{
-		$this->assertInstanceOf('Foolz\Theme\AssetManager', $this->theme()->createAssetManager());
+		$this->assertInstanceOf('Foolz\Theme\AssetManager', $this->theme()->getAssetManager());
 	}
 }

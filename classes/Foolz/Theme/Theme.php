@@ -18,6 +18,16 @@ class Theme extends \Foolz\Package\Package
 	}
 
 	/**
+	 * Gets the loader that created this object
+	 *
+	 * @return  \Foolz\Theme\Loader
+	 */
+	public function getLoader()
+	{
+		return parent::getLoader();
+	}
+
+	/**
 	 * Returns a new Builder object
 	 *
 	 * @return  \Foolz\Theme\Builder  A new instance of the builder
@@ -34,7 +44,7 @@ class Theme extends \Foolz\Package\Package
 	 */
 	public function getAssetManager()
 	{
-		return new AssetManager($this, "", "");
+		return new AssetManager($this);
 	}
 
 	/**

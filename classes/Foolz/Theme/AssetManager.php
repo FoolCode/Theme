@@ -36,23 +36,22 @@ class AssetManager
 	 * Create a new instance of the asset manager
 	 *
 	 * @param  \Foolz\Theme\Theme  $theme       The reference to the theme creating this asset manager
-	 * @param  string              $public_dir  The directory where files can be accessed via URL
-	 * @param  string              $base_url    The URL that points to the public directory
 	 *
 	 * @return  \Foolz\Theme\AssetManager
 	 */
-	public function __construct(\Foolz\Theme\Theme $theme, $public_dir, $base_url)
+	public function __construct(\Foolz\Theme\Theme $theme)
 	{
 		$this->theme = $theme;
-		$this->public_dir = $public_dir;
-		$this->public_dir_mtime = filemtime($this->getPublicDir());
-		$this->base_url = $base_url;
+		$this->public_dir = $this->getTheme()->getLoader()->getPublicDir();
+		$this->base_url = $this->getTheme()->getLoader()->getBaseUrl();
 
 		// load the assets
 		if ( ! file_exists($this->getPublicDir()))
 		{
 			$this->loadAssets();
 		}
+
+		$this->public_dir_mtime = filemtime($this->getPublicDir());
 
 		// reload the assets if the assets directory is more recent
 		if (filemtime($this->getTheme()->getDir().'assets') > $this->public_dir_mtime)
@@ -99,7 +98,14 @@ class AssetManager
 	 */
 	protected function loadAssets()
 	{
-		copy($this->getTheme()->getDir().'assets', $this->getPublicDir());
+		if ( ! file_exists($this->getPublicDir()))
+		{
+			mkdir($this->getPublicDir(), 0777, true);
+		}
+
+		// damned copy doesn't work with directories
+		//copy($this->getTheme()->getDir().'assets', $this->getPublicDir());
+		system('cp -R '.$this->getTheme()->getDir().'assets/*'.' '.$this->getPublicDir());
 	}
 
 	/**
