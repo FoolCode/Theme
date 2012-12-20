@@ -10,6 +10,7 @@ class BuilderTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 *
 	 * @return  \Foolz\Theme\Loader
 	 */
 	public function load()
@@ -20,6 +21,7 @@ class BuilderTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 *
 	 * @return  \Foolz\Theme\Theme
 	 */
 	public function theme()
@@ -29,6 +31,7 @@ class BuilderTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 *
 	 * @return  \Foolz\Theme\Builder
 	 */
 	public function bld()

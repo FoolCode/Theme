@@ -6,6 +6,7 @@ use Foolz\Theme\Loader as Loader;
 class ThemeTest extends PHPUnit_Framework_TestCase
 {
 	/**
+	 *
 	 * @return  \Foolz\Theme\Loader
 	 */
 	public function load()
@@ -16,6 +17,7 @@ class ThemeTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 *
 	 * @return  \Foolz\Theme\Theme
 	 */
 	public function theme()
