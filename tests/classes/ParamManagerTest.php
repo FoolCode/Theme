@@ -12,32 +12,31 @@ class ParamManagerTest extends PHPUnit_Framework_TestCase
 
 	/**
 	 * @expectedException \OutOfBoundsException
+	 * @expectedExceptionMessage Undefined parameter.
 	 */
 	public function testSetGetParamThrowsOutOfBounds()
 	{
 		$new = new ParamManager();
-		$new->getParam('derp');
+		$new->getParam('herp');
 	}
 
-	public function testGetSetParam()
+	public function testSetGetParam()
 	{
-		$stack = array();
-        $this->assertEquals(0, count($stack));
- 
-        array_push($stack, 'foo');
-        $this->assertEquals('foo', $stack[count($stack)-1]);
-        $this->assertEquals(1, count($stack));
- 
-        $this->assertEquals('foo', array_pop($stack));
-        $this->assertEquals(0, count($stack));
+		$arr = array('param1' => 'test', 'param2' => 'testtest');
+		$new = new ParamManager($arr);
+
+		$new->setParams($arr);
+		$this->assertSame($arr, $new->getParams());
+		$this->assertSame('test', $new->getParam('param1'));
+		$this->assertSame('testtest', $new->getParam('param2'));
 	}
 
-	public function testGetSetParams()
+	public function testSetGetParams()
 	{
 		$arr = array('param1' => 'test', 'param2' => 'testtest');
 		$new = new ParamManager();
-		$new->setParams($arr);
 
+		$new->setParams($arr);
 		$this->assertSame($arr, $new->getParams());
 	}
 }

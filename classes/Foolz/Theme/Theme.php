@@ -14,7 +14,6 @@ class Theme extends \Foolz\Package\Package
 			$this->enableAutoloader();
 			static::$autoloaded[] = __CLASS__;
 		}
-
 	}
 
 	/**

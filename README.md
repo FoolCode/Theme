@@ -1,28 +1,28 @@
 Foolz PHP Theme system
 =======================
 
-A theme system that abuses OOP to give those features you always dreamed about.
+A theme system that abuses OOP to give you those features you've always dreamed of.
 
 You will need PHP 5.4 for this to work. You can install it through [Composer](http://getcomposer.org/) and [Packagist](https://packagist.org/packages/foolz/plugin).
 
 ## What a mess!
 
-Foolz\Theme works upon Foolz\Plugin. This means it has inbuilt support for plugin-like stuff, and use it if you wish, or just forget about it. We use it plenty to allow re-skinning and hooking links on the interface.
+Foolz\Theme works on top of Foolz\Plugin. This means it has built-in support for plugin-like stuff, that you can use or ignore at will. We use it to allow re-skinning and hooking links on the interface.
 
-What we disliked about other theme systems is that they were nothing more than View managers, monolithic and raw.
+We created our own Theme system because other theme systems were nothing more than View managers, monolithic and raw.
 
-This package aims to use a multi-level approach to themes, where you can go up and down in the system and build components at the very last moment - by interacting with the theme in the theme itself. The structure is the following:
+This package aims to use a multi-level approach to themes, where you can go up and down in the system and build components at the very last moment - by interacting with the theme directly. The structure goes like this:
 
 * Loader
 * Theme
 * Builder -> Global Parameter Manager
 * View -> Local Parameter Manager
 
-From the View you can bubble up to the Loader, grab the global parameters, enter other partials, build them within the View.
+From the View you can bubble up to the Loader, grab the global parameters, enter other partials, and build them within the View.
 
 Other features:
 
-* Child themes: Instead of having to duplicate the entire theme directory, you can extend another and fallback on its files. You can also extend a theme that by itself extends another, without depth limit.
+* Child themes: Instead of having to duplicate the entire theme directory, you can extend another theme and fallback on its files. You can also extend from an extended theme, with no limit.
 * Asset Manager: compile LESS files on the fly.
 
 
@@ -81,7 +81,7 @@ The builder is used to create the HTML. It divides the job between layouts and p
 
 #### Parameter Manager
 
-Parameter managers are used to consistently store variables for being used in the theme. The Builder owns a global one, and every View has a local one.
+Parameter managers are used to consistently store variables for use in the theme. The Builder has a global one, and every View has a local one.
 
 * __$pm->reset()__
 
@@ -114,7 +114,7 @@ Parameter managers are used to consistently store variables for being used in th
 
 #### View
 
-The View returned by the Builder is most often a custom object extending \Foolz\Theme\View.
+The View returned by the Builder is usually a custom object extending \Foolz\Theme\View.
 
 __It's compulsory to override the `toString()` method (not the `__toString()` magic method!) in order to output the HTML. This function should output HTML or return a string.__
 
@@ -124,7 +124,7 @@ __It's compulsory to override the `toString()` method (not the `__toString()` ma
 
 * __$view->getType()__
 
-	Returns the type of View. `layout` or `partial`.
+	Returns the type of View, either `layout` or `partial`.
 
 * __$view->getView()__
 
@@ -136,7 +136,7 @@ __It's compulsory to override the `toString()` method (not the `__toString()` ma
 
 * __$view->build()__
 
-	Builds _and cached_ the HTML. Returns the HTML.
+	Builds _and caches_ the HTML. Returns the HTML.
 
 * __$view->doBuild()__
 
