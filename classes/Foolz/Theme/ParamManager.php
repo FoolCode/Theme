@@ -37,6 +37,7 @@ class ParamManager
 	 *
 	 * @param   string  $key
 	 * @return  mixed  The value of the parameter
+	 *
 	 * @throws  \OutOfBoundsException If the key is not set
 	 */
 	public function getParam($key)
@@ -45,6 +46,7 @@ class ParamManager
 		{
 			throw new \OutOfBoundsException('Undefined parameter.');
 		}
+
 		return $this->params[$key];
 	}
 
@@ -53,11 +55,13 @@ class ParamManager
 	 *
 	 * @param   string  $key    The key for the value
 	 * @param   mixed   $value  The value
+	 *
 	 * @return  \Foolz\Theme\ParamManager  The current object
 	 */
 	public function setParam($key, $value)
 	{
 		$this->params[$key] = $value;
+
 		return $this;
 	}
 
@@ -73,6 +77,7 @@ class ParamManager
 		{
 			$this->params[$key] = $item;
 		}
+		
 		return $this;
 	}
 }

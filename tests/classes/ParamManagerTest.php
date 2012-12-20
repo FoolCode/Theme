@@ -22,11 +22,10 @@ class ParamManagerTest extends PHPUnit_Framework_TestCase
 
 	public function testSetGetParam()
 	{
-		$arr = array('param1' => 'test', 'param2' => 'testtest');
-		$new = new ParamManager($arr);
+		$new = new ParamManager();
 
-		$new->setParams($arr);
-		$this->assertSame($arr, $new->getParams());
+		$new->setParam('param1', 'test');
+		$new->setParam('param2', 'testtest');
 		$this->assertSame('test', $new->getParam('param1'));
 		$this->assertSame('testtest', $new->getParam('param2'));
 	}
