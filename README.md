@@ -36,9 +36,9 @@ The Theme object abstracts the content of the theme. These will be returned by t
 
 	Returns a new builder. It's used to create the HTML.
 
-* __$theme->createAssetManager()__
+* __$theme->getAssetManager()__
 
-	Returns a new asset manager. It's used to load and edit the content of the package that the user will download, like stylesheets and images.
+	Returns the asset manager. It's used to load and edit the content of the package that the user will download, like stylesheets and images.
 
 #### Builder
 
@@ -136,10 +136,10 @@ __It's compulsory to override the `toString()` method (not the `__toString()` ma
 
 * __$view->build()__
 
-	Builds _and cached_ the HTML. Returns the HTML.
+	Builds _and caches_ the HTML. Returns the HTML.
 
 * __$view->doBuild()__
 
 	Builds the HTML and stores it in a variable. Rebuilds the HTML every time it's called.
 
-	__CHAINABLE__
+	_CHAINABLE_

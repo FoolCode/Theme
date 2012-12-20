@@ -28,13 +28,13 @@ class Theme extends \Foolz\Package\Package
 	}
 
 	/**
-	 * Returns a new global Asset object
+	 * Returns an AssetManager object to deal with the assets
 	 *
 	 * @return  \Foolz\Theme\AssetManager  A new instance of the AssetManager
 	 */
-	public function createAssetManager()
+	public function getAssetManager()
 	{
-		return new AssetManager($this);
+		return new AssetManager($this, "", "");
 	}
 
 	/**
