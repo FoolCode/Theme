@@ -42,7 +42,7 @@ class ParamManager
 	 */
 	public function getParam($key)
 	{
-		if ( ! isset($this->params[$key]))
+		if ( ! array_key_exists($key, $this->params))
 		{
 			throw new \OutOfBoundsException('Undefined parameter.');
 		}
@@ -77,7 +77,7 @@ class ParamManager
 		{
 			$this->params[$key] = $item;
 		}
-		
+
 		return $this;
 	}
 }

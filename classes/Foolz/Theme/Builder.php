@@ -33,6 +33,13 @@ class Builder
 	protected $param_manager;
 
 	/**
+	 * Instance of a props object
+	 *
+	 * @var  \Foolz\Theme\Props
+	 */
+	protected $props = null;
+
+	/**
 	 * We need at least a theme
 	 *
 	 * @param  \Foolz\Theme\Theme  $theme  The theme object creating this builder
@@ -41,6 +48,7 @@ class Builder
 	{
 		$this->theme = $theme;
 		$this->param_manager = new ParamManager();
+		$this->props = new Props();
 	}
 
 	/**
@@ -61,6 +69,16 @@ class Builder
 	public function getParamManager()
 	{
 		return $this->param_manager;
+	}
+
+	/**
+	 * Returns the props object to manage title, meta etc.
+	 *
+	 * @return  \Foolz\Theme\Props  The props object
+	 */
+	public function getProps()
+	{
+		return $this->props;
 	}
 
 	/**

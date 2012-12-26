@@ -12,6 +12,13 @@ class View
 	protected $builder;
 
 	/**
+	 * Instance of a props object
+	 *
+	 * @var  \Foolz\Theme\Props
+	 */
+	protected $props = null;
+
+	/**
 	 * The type of view, if partial or layout
 	 *
 	 * @var  string
@@ -43,6 +50,7 @@ class View
 	{
 		// get the View object in case it can be found
 		$class = $builder->getTheme()->getNamespace().'\\'.  ucfirst($type).'\\'.Util::lowercaseToClassName($view);
+
 		if (class_exists($class))
 		{
 			$new = new $class();
@@ -173,7 +181,9 @@ class View
 	 */
 	public function doBuild()
 	{
-		$this->built = $this->toString();
+		ob_start();
+		$this->toString();
+		$this->built = ob_get_clean();
 
 		return $this;
 	}
