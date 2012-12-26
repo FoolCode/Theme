@@ -33,7 +33,8 @@ class ParamManager
 	}
 
 	/**
-	 * Returns the parameter with the key
+	 * Returns the parameter with the key. Supports fallback.
+	 * It uses func_num_args() so if a second parameter is passed, it will use it as fallback.
 	 *
 	 * @param   string  $key
 	 * @return  mixed  The value of the parameter
@@ -42,12 +43,18 @@ class ParamManager
 	 */
 	public function getParam($key)
 	{
-		if ( ! array_key_exists($key, $this->params))
+		if (array_key_exists($key, $this->params))
 		{
-			throw new \OutOfBoundsException('Undefined parameter.');
+			return $this->params[$key];
 		}
 
-		return $this->params[$key];
+		// return a second parameter
+		if (func_num_args() === 2)
+		{
+			return func_get_arg(1);
+		}
+
+		throw new \OutOfBoundsException('Undefined parameter.');
 	}
 
 	/**

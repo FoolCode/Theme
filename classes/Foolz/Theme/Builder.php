@@ -132,12 +132,24 @@ class Builder
 	 */
 	public function getPartial($name)
 	{
-		if (isset($this->partials[$name]))
+		if (array_key_exists($name, $this->partials))
 		{
 			return $this->partials[$name];
 		}
 
 		throw new \OutOfBoundsException('No such partial exists.');
+	}
+
+	/**
+	 * Tells if a partial has already been created
+	 *
+	 * @param  string  $name  The name of the partial
+	 *
+	 * @return  bool  True if the partial has been set, false otherwise
+	 */
+	public function isPartial($name)
+	{
+		return array_key_exists($name, $this->partials);
 	}
 
 	/**

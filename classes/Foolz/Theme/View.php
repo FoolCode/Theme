@@ -45,6 +45,8 @@ class View
 	 * @param  \Foolz\Theme\Builder  $builder  The Builder object creating this view
 	 * @param  string                $type     The type of view, it can be partial or layout
 	 * @param  string                $view     The name of the view
+	 *
+	 * @return  \Foolz\Theme\View  The new view
 	 */
 	public static function forge(\Foolz\Theme\Builder $builder, $type, $view)
 	{
@@ -87,6 +89,36 @@ class View
 	public function getBuilder()
 	{
 		return $this->builder;
+	}
+
+	/**
+	 * Returns the global parameter manager located in the builder
+	 *
+	 * @return  \Foolz\Theme\ParamManager  The ParamManager that belongs to the Builder
+	 */
+	public function getBuilderParamManager()
+	{
+		return $this->getBuilder()->getParamManager();
+	}
+
+	/**
+	 * Returns the theme that belongs to this view
+	 *
+	 * @return  \Foolz\Theme\Theme  The Theme that created this View
+	 */
+	public function getTheme()
+	{
+		return $this->getBuilder()->getTheme();
+	}
+
+	/**
+	 * Returns the asset manager that belongs to the theme that created this view
+	 *
+	 * @return  \Foolz\Theme\AssetManager The Theme's AssetManager
+	 */
+	public function getAssetManager()
+	{
+		return $this->getTheme()->getAssetManager();
 	}
 
 	/**
@@ -189,36 +221,12 @@ class View
 	}
 
 	/**
-	 * If not extended, it will check if there's a classic view file and return the result
+	 * Method to override to echo the content of the theme
 	 *
-	 * @return  string  The compiled string
-	 * @throws  \OutOfBoundsException  If the view is not found also in the extended themes
+	 * @throws  \BadMethodCallException  If not overridden
 	 */
 	public function toString()
 	{
-		$theme = $this->getBuilder()->getTheme();
-
-		while (true)
-		{
-			$file = $theme->getDir().$this->type.DIRECTORY_SEPARATOR.$this->view.'.php';
-			if (file_exists($file))
-			{
-				// isolation function
-				$function = function()
-				{
-					ob_start();
-					include $this->getTheme()->getDir().$this->type.DIRECTORY_SEPARATOR.$this->view.'.php';
-					return ob_get_clean();
-				};
-
-				$function = $function->bindTo($this);
-				return $function();
-			}
-
-			$theme = $theme->getExtended();
-		}
-
-		// this should be thrown by $theme->getExtended, but we want to be explicit
-		throw new \OutOfBoundsException;
+		throw new \BadMethodCallException('The toString() method must be overridden to output the theme content');
 	}
 }

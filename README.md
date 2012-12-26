@@ -91,13 +91,14 @@ Parameter managers are used to consistently store variables for use in the theme
 
 	Returns an array of parameters.
 
-* __$pm->getParam($key)__
+* __$pm->getParam($key, $fallback = undefined)__
 
 	* string _$key_ - The key for the value
+	* mixed _$fallback_
 
-	Returns the value stored with $key.
+	Returns the value stored with $key. The fallback is activated through func_num_args() so it works even when using `null`.
 
-	__Throws:__ _\OutOfBoundsException_ - If the value was not set
+	__Throws:__ _\OutOfBoundsException_ - If the value was not set and a fallback is not available
 
 * __$pm->setParam($key, $value)__
 
@@ -115,6 +116,8 @@ Parameter managers are used to consistently store variables for use in the theme
 #### View
 
 The View returned by the Builder is usually a custom object extending \Foolz\Theme\View.
+
+There's also a bunch of shortcuts to go to the above levels available (getBuilder, getBuilderParamManager, getTheme, getAssetManager)
 
 __It's compulsory to override the `toString()` method (not the `__toString()` magic method!) in order to output the HTML. This function should output HTML or return a string.__
 
