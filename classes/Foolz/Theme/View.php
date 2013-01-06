@@ -51,16 +51,20 @@ class View
 	public static function forge(\Foolz\Theme\Builder $builder, $type, $view)
 	{
 		// get the View object in case it can be found
-		$class = $builder->getTheme()->getNamespace().'\\'.  ucfirst($type).'\\'.Util::lowercaseToClassName($view);
+		$theme = $builder->getTheme();
+		do
+		{
+			$class = $theme->getNamespace().'\\'.  ucfirst($type).'\\'.Util::lowercaseToClassName($view);
 
-		if (class_exists($class))
-		{
-			$new = new $class();
-		}
-		else
-		{
-			$new = new static();
-		}
+			if (class_exists($class))
+			{
+				$new = new $class();
+				break;
+			}
+
+		} while ($theme = $theme->getExtended());
+
+
 
 		$new->setBuilder($builder);
 		$new->setType($type);
