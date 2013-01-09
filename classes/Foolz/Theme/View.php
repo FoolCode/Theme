@@ -64,8 +64,6 @@ class View
 
 		} while ($theme = $theme->getExtended());
 
-
-
 		$new->setBuilder($builder);
 		$new->setType($type);
 		$new->setView($view);

@@ -103,7 +103,7 @@ class BuilderTest extends PHPUnit_Framework_TestCase
 	public function testBuild()
 	{
 		$bld = $this->bld();
-		$bld->createLayout('ThisLayout');
+		$bld->createLayout('this_layout');
 		$this->assertSame('A fake layout.', $bld->build());
 	}
 }

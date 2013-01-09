@@ -33,7 +33,6 @@ class ThemeTest extends PHPUnit_Framework_TestCase
 		return $loader->get('themes', 'foolz/foolfake-theme-fake');
 	}
 
-
 	public function testTheme()
 	{
 		$this->assertInstanceOf('Foolz\Theme\Theme', $this->theme());
@@ -47,5 +46,23 @@ class ThemeTest extends PHPUnit_Framework_TestCase
 	public function testGetAssetManager()
 	{
 		$this->assertInstanceOf('Foolz\Theme\AssetManager', $this->theme()->getAssetManager());
+	}
+
+	/**
+	 * @expectedException        \OutOfBoundsException
+	 * @expectedExceptionMessage No theme to extend.
+	 */
+	public function testGetExtendedThrowsOutOfBoundsNull()
+	{
+		$loader = $this->load();
+		$loader->get('themes', 'foolz/foolfake-theme-fake');
+		$this->theme()->getExtended();
+	}
+
+	public function testGetNamespace()
+	{
+		$loader = $this->load();
+		$loader->get('themes', 'foolz/foolfake-theme-fake');
+		$this->assertSame('Foolz\Foolfake\Theme\Fake', $this->theme()->getNamespace());
 	}
 }

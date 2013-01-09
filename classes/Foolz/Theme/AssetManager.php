@@ -72,6 +72,23 @@ class AssetManager
 	}
 
 	/**
+	 * Checks if the theme assets exist and returns a boolean
+	 *
+	 * @return  bool    True if assets exist, false if not.
+	 */
+	public function assetExists()
+	{
+		$asset_manager = $this;
+		$asset = $asset_manager->public_dir.$asset_manager->getTheme()->getConfig('name').'/';
+
+		do
+		{
+			return (file_exists($asset));
+		}
+		while ($asset_manager = $asset_manager->getTheme()->getExtended()->getAssetManager());
+	}
+
+	/**
 	 * Returns the path to the directory where the public files get loaded
 	 *
 	 * @return  string  The path
