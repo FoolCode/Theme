@@ -9,12 +9,12 @@ class Theme extends \Foolz\Package\Package
 	public function __construct($dir)
 	{
 		parent::__construct($dir);
-		if ( ! in_array(__CLASS__, static::$autoloaded))
+		if ( ! in_array($dir, static::$autoloaded))
 		{
 			$this->enableAutoloader();
-			static::$autoloaded[] = __CLASS__;
+			static::$autoloaded[] = $dir;
 		}
-		
+
 	}
 
 	/**
