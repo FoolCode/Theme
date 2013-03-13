@@ -50,14 +50,16 @@ class AssetManager
 		{
 			$this->loadAssets();
 		}
-
-		$this->public_dir_mtime = filemtime($this->getPublicDir());
-
-		// reload the assets if the assets directory is more recent
-		if (filemtime($this->getTheme()->getDir().'assets') > $this->public_dir_mtime)
+		else
 		{
-			$this->clearAssets();
-			$this->loadAssets();
+			//$this->public_dir_mtime = filemtime($this->getPublicDir());
+
+			// reload the assets if the assets directory is more recent
+			//if (filemtime($this->getTheme()->getDir().'assets') > $this->public_dir_mtime)
+			{
+			//	$this->clearAssets();
+				$this->loadAssets();
+			}
 		}
 	}
 
@@ -74,7 +76,7 @@ class AssetManager
 	/**
 	 * Checks if the theme assets exist and returns a boolean
 	 *
-	 * @return  bool    True if assets exist, false if not.
+	 * @return  bool  True if assets exist, false if not.
 	 */
 	public function assetExists()
 	{
