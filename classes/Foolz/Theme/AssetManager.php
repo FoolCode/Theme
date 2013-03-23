@@ -48,7 +48,7 @@ class AssetManager
 		// load the assets
 		if ( ! file_exists($this->getPublicDir()))
 		{
-			//$this->clearAssets();
+			$this->clearAssets();
 			$this->loadAssets();
 		}
 	}
