@@ -64,28 +64,6 @@ class AssetManager
 	}
 
 	/**
-	 * Checks if the theme assets exist and returns a boolean
-	 *
-	 * @return  bool  True if assets exist
-	 * @throws  \OutOfBoundsException  If the file is not found in this or any extended theme
-	 */
-	public function assetExists()
-	{
-		$asset_manager = $this;
-		$asset = $asset_manager->public_dir.$asset_manager->getTheme()->getConfig('name').'/';
-
-		// if the file doesn't exist, we want getExtended to throw its exception
-		do
-		{
-			if (file_exists($asset))
-			{
-				return true;
-			}
-		}
-		while ($asset_manager = $asset_manager->getTheme()->getExtended()->getAssetManager());
-	}
-
-	/**
 	 * Returns the path to the directory where the public files get loaded
 	 *
 	 * @return  string  The path
@@ -105,8 +83,15 @@ class AssetManager
 	 */
 	public function getAssetLink($path)
 	{
-		return $this->base_url.$this->getTheme()->getConfig('name')
+		$candidate = $this->base_url.$this->getTheme()->getConfig('name')
 			.'/assets-'.$this->getTheme()->getConfig('version').'/'.$path;
+
+		if (file_exists($this->getPublicDir().$path))
+		{
+			return $candidate;
+		}
+
+		return $this->getTheme()->getExtended()->getAssetManager()->getAssetLink($path);
 	}
 
 	/**
