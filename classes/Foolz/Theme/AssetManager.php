@@ -48,18 +48,8 @@ class AssetManager
 		// load the assets
 		if ( ! file_exists($this->getPublicDir()))
 		{
+			//$this->clearAssets();
 			$this->loadAssets();
-		}
-		else
-		{
-			//$this->public_dir_mtime = filemtime($this->getPublicDir());
-
-			// reload the assets if the assets directory is more recent
-			//if (filemtime($this->getTheme()->getDir().'assets') > $this->public_dir_mtime)
-			{
-			//	$this->clearAssets();
-				$this->loadAssets();
-			}
 		}
 	}
 
@@ -76,16 +66,21 @@ class AssetManager
 	/**
 	 * Checks if the theme assets exist and returns a boolean
 	 *
-	 * @return  bool  True if assets exist, false if not.
+	 * @return  bool  True if assets exist
+	 * @throws  \OutOfBoundsException  If the file is not found in this or any extended theme
 	 */
 	public function assetExists()
 	{
 		$asset_manager = $this;
 		$asset = $asset_manager->public_dir.$asset_manager->getTheme()->getConfig('name').'/';
 
+		// if the file doesn't exist, we want getExtended to throw its exception
 		do
 		{
-			return (file_exists($asset));
+			if (file_exists($asset))
+			{
+				return true;
+			}
 		}
 		while ($asset_manager = $asset_manager->getTheme()->getExtended()->getAssetManager());
 	}
@@ -97,7 +92,8 @@ class AssetManager
 	 */
 	protected function getPublicDir()
 	{
-		return $this->public_dir.$this->getTheme()->getConfig('name').'/';
+		return $this->public_dir.$this->getTheme()->getConfig('name')
+			.'/assets-'.$this->getTheme()->getConfig('version').'/';
 	}
 
 	/**
@@ -109,7 +105,8 @@ class AssetManager
 	 */
 	public function getAssetLink($path)
 	{
-		return $this->base_url.$this->getTheme()->getConfig('name').'/'.$path;
+		return $this->base_url.$this->getTheme()->getConfig('name')
+			.'/assets-'.$this->getTheme()->getConfig('version').'/'.$path;
 	}
 
 	/**
@@ -134,7 +131,8 @@ class AssetManager
 	 */
 	public function clearAssets()
 	{
-		static::flushDir($this->getPublicDir());
+		// get it just right out of the assets folder
+		static::flushDir($this->public_dir.$this->getTheme()->getConfig('name'));
 
 		return $this;
 	}
