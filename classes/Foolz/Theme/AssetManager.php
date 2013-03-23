@@ -132,7 +132,10 @@ class AssetManager
 	public function clearAssets()
 	{
 		// get it just right out of the assets folder
-		static::flushDir($this->public_dir.$this->getTheme()->getConfig('name'));
+		if (file_exists($this->public_dir.$this->getTheme()->getConfig('name')))
+		{
+			static::flushDir($this->public_dir.$this->getTheme()->getConfig('name'));
+		}
 
 		return $this;
 	}
