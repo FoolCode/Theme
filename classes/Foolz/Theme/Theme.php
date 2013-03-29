@@ -55,21 +55,7 @@ class Theme extends \Foolz\Package\Package
 	 */
 	public function getExtended()
 	{
-		$extended = $this->getConfig('extra.extends', null);
-
-		if ($extended === null)
-		{
-			throw new \OutOfBoundsException('No theme to extend.');
-		}
-
-		try
-		{
-			return $this->getLoader()->get($this->getDirName(), $extended);
-		}
-		catch (\OutOfBoundsException $e)
-		{
-			throw new \OutOfBoundsException('No such theme available for extension.');
-		}
+		return parent::getExtended();
 	}
 
 	/**
