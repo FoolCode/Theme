@@ -44,7 +44,11 @@ class Theme extends \Foolz\Package\Package
 	 */
 	public function getAssetManager()
 	{
-		return new AssetManager($this);
+		if ($this->asset_manager !== null)
+		{
+			return $this->asset_manager;
+		}
+		return $this->asset_manager = new AssetManager($this);
 	}
 
 	/**
