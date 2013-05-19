@@ -21,6 +21,18 @@ class Util
 			$result .= ucfirst($piece);
 		}
 
+		$pieces = explode('/', $result);
+
+		if (count($pieces) >= 1)
+		{
+			$result = array_shift($pieces);
+		}
+
+		foreach ($pieces as $piece)
+		{
+			$result .= '\\'.ucfirst($piece);
+		}
+
 		return $result;
 	}
 }
