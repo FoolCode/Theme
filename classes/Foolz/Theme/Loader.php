@@ -56,27 +56,24 @@ class Loader extends \Foolz\Package\Loader
 	/**
 	 * Gets all the themes or the themes from the directory
 	 *
-	 * @param   null|string  $dir_name  if specified it gets only a group of themes
-	 *
 	 * @return  \Foolz\Theme\Theme[]    All the themes or the themes in the directory
 	 * @throws  \OutOfBoundsException   If there isn't such a $dir_name set
 	 */
-	public function getAll($dir_name = null)
+	public function getAll()
 	{
-		return parent::getAll($dir_name);
+		return parent::getAll();
 	}
 
 	/**
 	 * Gets a single theme object
 	 *
-	 * @param   string  $dir_name  The directory name where to find the theme
 	 * @param   string  $slug      The slug of the theme
 	 *
 	 * @return  \Foolz\Theme\Theme
 	 * @throws  \OutOfBoundsException  if the theme doesn't exist
 	 */
-	public function get($dir_name, $slug)
+	public function get($slug)
 	{
-		return parent::get($dir_name, $slug);
+		return parent::get($slug);
 	}
 }

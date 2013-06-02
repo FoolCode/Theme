@@ -217,8 +217,21 @@ class View
 	{
 		ob_start();
 		$this->toString();
-		$this->built = ob_get_clean();
+		$this->setBuilt(ob_get_clean());
 
+		return $this;
+	}
+
+	/**
+	 * Allows modifying the string of the built view
+	 *
+	 * @param $string The string to set as built
+	 *
+	 * @return $this
+	 */
+	public function setBuilt($string)
+	{
+		$this->built = $string;
 		return $this;
 	}
 
