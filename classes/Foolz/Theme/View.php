@@ -54,7 +54,7 @@ class View
 		$theme = $builder->getTheme();
 		do
 		{
-			$class = $theme->getNamespace().'\\'.  ucfirst($type).'\\'.Util::lowercaseToClassName($view);
+			$class = $theme->getNamespace().'\\'.ucfirst($type).'\\'.Util::lowercaseToClassName($view);
 
 			if (class_exists($class))
 			{

@@ -54,6 +54,41 @@ class Loader extends \Foolz\Package\Loader
 	}
 
 	/**
+	 * Returns an array of [vendor/theme/style => ['theme' => Object, 'string' => 'Theme - Style']] to use in themes for selection
+	 *
+	 * @return array An array of [vendor/theme/style => ['object' => Object, 'string' => 'Theme - Style']]
+	 */
+	public function getListWithStyles()
+	{
+		$themes_with_styles = [];
+
+		foreach($this->getAll() as $name => $theme)
+		{
+			if ($theme->getConfig('extra.styles', false))
+			{
+				foreach ($theme->getConfig('extra.styles') as $style => $style_name)
+				{
+					$themes_with_styles[$name.'/'.$style] = [
+						'string' => $theme->getConfig('extra.name').' - '.$style_name,
+						'style' => $style,
+						'object' => $theme
+					];
+				}
+			}
+			else
+			{
+				$themes_with_styles[$name] = [
+					'string' => $theme->getConfig('extra.name'),
+					'style' => null,
+					'object' => $theme
+				];
+			}
+		}
+
+		return $themes_with_styles;
+	}
+
+	/**
 	 * Gets all the themes or the themes from the directory
 	 *
 	 * @return  \Foolz\Theme\Theme[]    All the themes or the themes in the directory

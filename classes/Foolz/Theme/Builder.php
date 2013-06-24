@@ -12,6 +12,13 @@ class Builder
 	protected $theme = null;
 
 	/**
+	 * Simple variable to choose an alternative style, which must be handled manually in the code
+	 *
+	 * @var null
+	 */
+	protected $style = null;
+
+	/**
 	 * The selected layout
 	 *
 	 * @var  \Foolz\Theme\View
@@ -59,6 +66,46 @@ class Builder
 	public function getTheme()
 	{
 		return $this->theme;
+	}
+
+	/**
+	 * Set a style
+	 *
+	 * @param  null|string  $style The key of the style, null for setting no style
+	 *
+	 * @throws  \OutOfBoundsException  If the style doesn't exist
+	 * @return  $this  \Foolz\Theme\Builder
+	 */
+	public function setStyle($style = null)
+	{
+		if ($styles = $this->getTheme()->getConfig('extra.styles', false))
+		{
+			if (isset($styles[$style]))
+			{
+				$this->style = $style;
+				return $this;
+			}
+		}
+
+		throw new \OutOfBoundsException;
+	}
+
+	/**
+	 * Returns the style
+	 *
+	 * @return  null|string  Null if no style is available, string with the key of the style if it is set or the first available style
+	 */
+	public function getStyle()
+	{
+		if ($this->style === null)
+		{
+			if ($styles = $this->getTheme()->getConfig('extra.styles', false))
+			{
+				return key($styles);
+			}
+		}
+
+		return $this->style;
 	}
 
 	/**
