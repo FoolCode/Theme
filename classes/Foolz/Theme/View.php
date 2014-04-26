@@ -225,7 +225,7 @@ class View
 	/**
 	 * Allows modifying the string of the built view
 	 *
-	 * @param $string The string to set as built
+	 * @param string $string The string to set as built
 	 *
 	 * @return $this
 	 */
@@ -234,6 +234,14 @@ class View
 		$this->built = $string;
 		return $this;
 	}
+
+    /**
+     * Clears the Built cache, run to save memory
+     */
+    public function clearBuilt()
+    {
+        $this->setBuilt(null);
+    }
 
 	/**
 	 * Method to override to echo the content of the theme
