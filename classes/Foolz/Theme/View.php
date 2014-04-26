@@ -193,6 +193,16 @@ class View
 		return $this->param_manager;
 	}
 
+    /**
+     * Flushes the built content to the browser if we're in streaming mode
+     */
+    public function flush()
+    {
+        if ($this->getBuilder()->isStreaming()) {
+            flush();
+        }
+    }
+
 	/**
 	 * Return the compiled view
 	 *

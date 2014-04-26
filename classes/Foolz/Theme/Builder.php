@@ -46,6 +46,13 @@ class Builder
 	 */
 	protected $props = null;
 
+    /**
+     * Tells whether we're streaming the response
+     *
+     * @var bool
+     */
+    protected $streaming = false;
+
 	/**
 	 * We need at least a theme
 	 *
@@ -209,4 +216,28 @@ class Builder
 	{
 		return $this->getLayout()->build();
 	}
+
+    /**
+     * Tells if we're streaming the building
+     *
+     * @return bool
+     */
+    public function isStreaming()
+    {
+        return $this->streaming;
+    }
+
+    /**
+     * Shorthand for streaming the layout
+     *
+     * @return  string                 The content generated
+     * @throws  \OutOfBoundsException  If the layout wasn't selected
+     */
+    public function stream()
+    {
+        $this->streaming = true;
+        $this->getLayout()->toString();
+        flush();
+        $this->streaming = false;
+    }
 }
