@@ -18,8 +18,8 @@
 		"foolz/cache": "dev-master"
 	},
     "autoload": {
-        "psr-0": {
-            "Foolz\\Theme": "classes/"
+        "psr-4": {
+            "Foolz\\Theme\\": "src/"
         }
     }
 }
