@@ -4,87 +4,85 @@ namespace Foolz\Theme;
 
 class ParamManager
 {
-	/**
-	 * The parameters (which can be modified with setParam())
-	 *
-	 * @var  array  Array with as keys the parameter key
-	 */
-	protected $params = [];
+    /**
+     * The parameters (which can be modified with setParam())
+     *
+     * @var  array  Array with as keys the parameter key
+     */
+    protected $params = [];
 
-	/**
-	 * Resets the object to the initial state
-	 *
-	 * @return  \Foolz\Theme\ParamManager  The current object
-	 */
-	public function reset()
-	{
-		$this->params = [];
-		return $this;
-	}
+    /**
+     * Resets the object to the initial state
+     *
+     * @return  \Foolz\Theme\ParamManager  The current object
+     */
+    public function reset()
+    {
+        $this->params = [];
 
-	/**
-	 * Returns the array of parameters
-	 *
-	 * @return  array  The array of parameters
-	 */
-	public function getParams()
-	{
-		return $this->params;
-	}
+        return $this;
+    }
 
-	/**
-	 * Returns the parameter with the key. Supports fallback.
-	 * It uses func_num_args() so if a second parameter is passed, it will use it as fallback.
-	 *
-	 * @param   string  $key
-	 * @return  mixed  The value of the parameter
-	 *
-	 * @throws  \OutOfBoundsException If the key is not set
-	 */
-	public function getParam($key)
-	{
-		if (array_key_exists($key, $this->params))
-		{
-			return $this->params[$key];
-		}
+    /**
+     * Returns the array of parameters
+     *
+     * @return  array  The array of parameters
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
 
-		// return a second parameter
-		if (func_num_args() === 2)
-		{
-			return func_get_arg(1);
-		}
+    /**
+     * Returns the parameter with the key. Supports fallback.
+     * It uses func_num_args() so if a second parameter is passed, it will use it as fallback.
+     *
+     * @param   string  $key
+     * @return  mixed  The value of the parameter
+     *
+     * @throws  \OutOfBoundsException If the key is not set
+     */
+    public function getParam($key)
+    {
+        if (array_key_exists($key, $this->params)) {
+            return $this->params[$key];
+        }
 
-		throw new \OutOfBoundsException('Undefined parameter.');
-	}
+        // return a second parameter
+        if (func_num_args() === 2) {
+            return func_get_arg(1);
+        }
 
-	/**
-	 * Updates a parameter
-	 *
-	 * @param   string  $key    The key for the value
-	 * @param   mixed   $value  The value
-	 *
-	 * @return  \Foolz\Theme\ParamManager  The current object
-	 */
-	public function setParam($key, $value)
-	{
-		$this->params[$key] = $value;
+        throw new \OutOfBoundsException('Undefined parameter.');
+    }
 
-		return $this;
-	}
+    /**
+     * Updates a parameter
+     *
+     * @param   string  $key    The key for the value
+     * @param   mixed   $value  The value
+     *
+     * @return  \Foolz\Theme\ParamManager  The current object
+     */
+    public function setParam($key, $value)
+    {
+        $this->params[$key] = $value;
 
-	/**
-	 * Updates several parameters
-	 *
-	 * @param   array  $array  Array with as keys the parameter key and as value the parameter value
-	 * @return  \Foolz\Theme\ParamManager
-	 */
-	public function setParams($array)
-	{
-		foreach ($array as $key => $item)
-		{
-			$this->params[$key] = $item;
-		}
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Updates several parameters
+     *
+     * @param   array  $array  Array with as keys the parameter key and as value the parameter value
+     * @return  \Foolz\Theme\ParamManager
+     */
+    public function setParams($array)
+    {
+        foreach ($array as $key => $item) {
+            $this->params[$key] = $item;
+        }
+
+        return $this;
+    }
 }
