@@ -53,7 +53,7 @@ class View
         // get the View object in case it can be found
         $theme = $builder->getTheme();
         do {
-            $class = $theme->getNamespace().'\\'.ucfirst($type).'\\'.Util::lowercaseToClassName($view);
+            $class = $theme->getNamespace().ucfirst($type).'\\'.Util::lowercaseToClassName($view);
 
             if (class_exists($class)) {
                 $new = new $class();

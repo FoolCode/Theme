@@ -68,12 +68,14 @@ class Theme extends \Foolz\Package\Package
      */
     public function getNamespace()
     {
-        $namespaces_array = $this->getConfig('autoload.psr-0', false);
-
-        if ($namespaces_array === false || empty($namespaces_array)) {
-            return false;
+        if ($namespace = $this->getConfig('autoload.psr-4', false)) {
+            return key($namespace);
         }
 
-        return key($namespaces_array);
+        if ($namespace = $this->getConfig('autoload.psr-0', false)) {
+            return key($namespace).'\\';
+        }
+
+        return false;
     }
 }
